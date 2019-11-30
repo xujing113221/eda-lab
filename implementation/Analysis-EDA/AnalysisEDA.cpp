@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 #include <algorithm>
+#include <fstream>
 
 
 Logic AnalysisEDA::AND(Logic a, Logic b) {
@@ -55,12 +56,12 @@ Logic AnalysisEDA::getNetLogic(size_t net){
 }
 
 void AnalysisEDA::run() {
-
+    std::ofstream outCSVfile;
     std::vector<size_t> outputPort;
     std::vector<size_t> inputPort;
     const DelayCalculator delayCalculator(graphHandler);
-    std::cout << "test:" << delayCalculator.getClockPeriod() << std::endl;
 
+    // init all nets
     for(const Net* net :graphHandler->getAllNets()){
         schaltung[net->getId()] = Logic::logicX;
         is_net_done[net->getId()] = false;
@@ -71,37 +72,53 @@ void AnalysisEDA::run() {
         if (net->getOutElements()[0] == nullptr)
             outputPort.push_back(net->getId());
     }
-    for (auto i : outputPort)
-        std::cout << graphHandler->getNet(i)->getName() << "\t";
-    std::cout << std::endl;
 
+    outCSVfile.open("out.scv",std::ios::out);
+
+    // print all output port
+    for (auto i : outputPort){
+        std::cout << graphHandler->getNet(i)->getName() << "\t";
+        outCSVfile << graphHandler->getNet(i)->getName() << ";";
+    }
+    std::cout << std::endl;
+    outCSVfile << std::endl;
+
+    // per clock input dates
     for (const std::vector<Logic>& timeStep : inputData) {
         unsigned long i = 0;
 
         for(auto iter = is_net_done.begin(); iter != is_net_done.end(); iter++)
             iter->second = false;
-
+        // init input port
         for (const Logic& value : timeStep) {
             schaltung[inputPort[i]] = value;
             is_net_done[inputPort[i]] = true;
             i++;
         }
-
+        // init Dff resgister
         for (auto i = regDff.begin(); i != regDff.end(); i++ ){
             schaltung[graphHandler->getNet(i->first)->getId()] = i->second;
             is_net_done[i->first] = true;
         }
-
-        for(std::vector<size_t>::iterator i = outputPort.begin(); i != outputPort.end(); i++)
-            std::cout << getNetLogic(*i) << "\t";
+        // calcuate logic value of all nets and print
+        for(std::vector<size_t>::iterator i = outputPort.begin(); i != outputPort.end(); i++){
+            Logic out = getNetLogic(*i);
+            std::cout << out << ";\t";
+            outCSVfile << out << ";";
+        }
         std::cout << std::endl;
-
+        outCSVfile << std::endl;
+        // update all Dff resgsiters
         for (auto i = regDff.begin(); i != regDff.end(); i++ )
             if("CLOCK" == graphHandler->getNet(i->first)->getInElement()->getInNets()[0]->getName())
                 i->second  = getNetLogic(graphHandler->getNet(i->first)->getInElement()->getInNets()[1]->getId());
             else i->second  =  getNetLogic(graphHandler->getNet(i->first)->getInElement()->getInNets()[0]->getId());
     }
+    // print clock periode
+    std::cout << "Taktperiode:\t" << delayCalculator.getClockPeriod() << std::endl;
+    outCSVfile << "Taktperiode:\t" << delayCalculator.getClockPeriod() << std::endl;
 
+    outCSVfile.close();
 #if false
     /*
      * The following code shows some exemplary usage of the API
