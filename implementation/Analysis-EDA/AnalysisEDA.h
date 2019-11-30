@@ -33,12 +33,11 @@ private:
     AnalysisEDA(const AnalysisEDA&);
     AnalysisEDA& operator=(const AnalysisEDA&);
 
-    Logic getNetLogic(size_t net);
-    void getNetLogic();
-    void updateDffReg();
     Logic AND(Logic a, Logic b);
     Logic OR(Logic a, Logic b);
     Logic NOT(Logic a);
+
+    Logic getNetLogic(size_t net);
 
     std::map<size_t, Logic> schaltung;
     std::map<size_t, bool> is_net_done;
