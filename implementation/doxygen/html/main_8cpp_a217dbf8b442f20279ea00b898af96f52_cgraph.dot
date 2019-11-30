@@ -1,0 +1,16 @@
+digraph "main"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="main",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node1 [label="Parser::parse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classParser.html#a0260cb6b9bc093116c115706ec267482",tooltip=" "];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node2 [label="AnalysisEDA::run",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classAnalysisEDA.html#aedc76c2fd727d7d3abf72c510cf3b019",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node3 [label="GraphHandler::getAllElements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classGraphHandler.html#a795c8072e7483681cad04df6035d8976",tooltip="Returns the vector of all Elements."];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node4 [label="GraphHandler::getAllNets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classGraphHandler.html#aac6816084341ea9b46ef2d5cfd16811e",tooltip="Returns the vector of all Nets."];
+}

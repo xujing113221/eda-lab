@@ -1,0 +1,12 @@
+digraph "AnalysisEDA::run"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="FreeSans.ttf",fontsize="10",labelfontname="FreeSans.ttf",labelfontsize="10"];
+  node [fontname="FreeSans.ttf",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4 [label="AnalysisEDA::run",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node5 [label="GraphHandler::getAllElements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classGraphHandler.html#a795c8072e7483681cad04df6035d8976",tooltip="Returns the vector of all Elements."];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="FreeSans.ttf"];
+  Node6 [label="GraphHandler::getAllNets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classGraphHandler.html#aac6816084341ea9b46ef2d5cfd16811e",tooltip="Returns the vector of all Nets."];
+}
