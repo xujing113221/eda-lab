@@ -49,21 +49,21 @@ void AnalysisEDA::run() {
         }
 
         // init Dff resgister
-        for (auto i = mRegDff.begin(); i != mRegDff.end(); i++) {
-            mSchaltung[graphHandler->getNet(i->first)->getId()] = i->second;
-            mNetMap[i->first] = true;
+        for (auto it = mRegDff.begin(); it != mRegDff.end(); it++) {
+            mSchaltung[graphHandler->getNet(it->first)->getId()] = it->second;
+            mNetMap[it->first] = true;
         }
 
         // calcuate logic value of all nets and print
-        for (std::vector<size_t>::iterator i = outputPort.begin(); i != outputPort.end(); i++) {
-            Logic out = calLogicResult(*i);
+        for (std::vector<size_t>::iterator it = outputPort.begin(); it != outputPort.end(); it++) {
+            Logic out = calLogicResult(*it);
             std::cout << out << ";\t";
         }
 
         std::cout << std::endl;
 
         // update all Dff resgsiters
-        for (auto i = mRegDff.begin(); i != mRegDff.end(); i++){
+        for (auto& i : mRegDff.begin(); i != mRegDff.end(); i++){
             if ("CLOCK" == graphHandler->getNet(i->first)->getInElement()->getInNets()[0]->getName())
                 i->second = calLogicResult(graphHandler->getNet(i->first)->getInElement()->getInNets()[1]->getId());
             else
