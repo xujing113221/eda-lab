@@ -63,7 +63,7 @@ void AnalysisEDA::run() {
         std::cout << std::endl;
 
         // update all Dff resgsiters
-        for (auto& i : mRegDff.begin(); i != mRegDff.end(); i++){
+        for (auto i = mRegDff.begin(); i != mRegDff.end(); i++){
             if ("CLOCK" == graphHandler->getNet(i->first)->getInElement()->getInNets()[0]->getName())
                 i->second = calLogicResult(graphHandler->getNet(i->first)->getInElement()->getInNets()[1]->getId());
             else
