@@ -36,12 +36,11 @@ private:
     Logic AND(Logic a, Logic b);
     Logic OR(Logic a, Logic b);
     Logic NOT(Logic a);
+    Logic calLogicResult(size_t net);
 
-    Logic getNetLogic(size_t net);
-
-    std::map<size_t, Logic> schaltung;
-    std::map<size_t, bool> is_net_done;
-    std::map<size_t, Logic> regDff;
+    std::map<size_t, Logic> mSchaltung;
+    std::map<size_t, bool> mNetMap;
+    std::map<size_t, Logic> mRegDff;
 
     const GraphHandler* graphHandler;
     const std::vector<std::vector<Logic>>& inputData;
